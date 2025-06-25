@@ -8,10 +8,12 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:perf": "jest --testMatch='**/*.perf.test.js'",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:agents\"",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:agents\" \"npm run monitor\"",
     "dev:backend": "nodemon src/api/server.ts",
     "dev:frontend": "cd src/frontend && vite",
     "dev:agents": "python src/agents/main.py",
+    "dev:monitor": "node scripts/monitor.js",
+    "monitor": "node scripts/monitor.js",
     "build": "npm run build:frontend && npm run build:backend && npm run compile",
     "build:frontend": "cd src/frontend && vite build",
     "build:backend": "tsc -p tsconfig.json",
@@ -37,7 +39,9 @@
     "docs": "typedoc --out docs src",
     "clean": "rm -rf dist build node_modules coverage artifacts cache",
     "precommit": "lint-staged",
-    "prepare": "husky install || true"
+    "prepare": "husky install || true",
+    "kill:ports": "lsof -ti:3000,5173 | xargs kill -9 || true",
+    "reset:dev": "npm run kill:ports && npm run docker:down && npm run docker:up && sleep 5 && npm run dev"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.9.7",

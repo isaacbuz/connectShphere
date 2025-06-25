@@ -1,187 +1,200 @@
-import express from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import morgan from 'morgan';
 import compression from 'compression';
-import rateLimit from 'express-rate-limit';
+import morgan from 'morgan';
 import { createServer } from 'http';
-import { Server } from 'socket.io';
+import { Server as SocketIOServer } from 'socket.io';
 import mongoose from 'mongoose';
-import Redis from 'ioredis';
 import dotenv from 'dotenv';
+import rateLimit from 'express-rate-limit';
 
 // Import routes
-import authRoutes from './routes/auth.routes';
-import contentRoutes from './routes/content.routes';
 import userRoutes from './routes/user.routes';
+import contentRoutes from './routes/content.routes';
+import authRoutes from './routes/auth.routes';
 import aiRoutes from './routes/ai.routes';
 import blockchainRoutes from './routes/blockchain.routes';
 
-// Import middleware
-import { authenticateToken } from './middleware/auth';
+// Import error handling
+import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 // Load environment variables
 dotenv.config();
 
 class StarlingServer {
-  public app: express.Application;
-  public server: any;
-  public io: Server;
-  public redis: Redis;
+  private app: Application;
+  private server: any;
+  private io: SocketIOServer;
+  private port: number;
 
   constructor() {
+    this.port = parseInt(process.env.PORT || '3000');
     this.app = express();
     this.server = createServer(this.app);
-    this.io = new Server(this.server, {
+    this.io = new SocketIOServer(this.server, {
       cors: {
-        origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-        credentials: true
+        origin: process.env.FRONTEND_URL || "http://localhost:5173",
+        methods: ["GET", "POST"]
       }
     });
-    this.redis = new Redis({
-      host: process.env.REDIS_HOST || 'localhost',
-      port: parseInt(process.env.REDIS_PORT || '6379'),
-    });
 
-    this.connectDatabase();
-    this.setupMiddleware();
-    this.setupRoutes();
-    this.setupSocketHandlers();
-    this.setupErrorHandling();
+    this.initializeMiddleware();
+    this.initializeRoutes();
+    this.initializeErrorHandling();
+    this.initializeWebSocket();
   }
 
-  private async connectDatabase(): Promise<void> {
-    try {
-      await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/starling_ai', {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      } as any);
-      console.log('✅ MongoDB connected successfully');
-    } catch (error) {
-      console.error('❌ MongoDB connection error:', error);
-      process.exit(1);
-    }
-  }
-
-  private setupMiddleware(): void {
+  private initializeMiddleware(): void {
     // Security middleware
-    this.app.use(helmet());
+    this.app.use(helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          styleSrc: ["'self'", "'unsafe-inline'", "https:"],
+          scriptSrc: ["'self'"],
+          imgSrc: ["'self'", "data:", "https:"],
+        },
+      },
+    }));
+
+    // CORS configuration
     this.app.use(cors({
-      origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-      credentials: true
+      origin: process.env.FRONTEND_URL || "http://localhost:5173",
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
     }));
 
     // Rate limiting
     const limiter = rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
       max: 100, // limit each IP to 100 requests per windowMs
-      message: 'Too many requests from this IP, please try again later.'
+      message: 'Too many requests from this IP, please try again later.',
+      standardHeaders: true,
+      legacyHeaders: false,
     });
     this.app.use('/api/', limiter);
 
-    // General middleware
+    // Other middleware
     this.app.use(compression());
-    this.app.use(express.json({ limit: '50mb' }));
-    this.app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-    this.app.use(morgan('combined'));
+    this.app.use(express.json({ limit: '10mb' }));
+    this.app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+    
+    // Logging
+    if (process.env.NODE_ENV !== 'test') {
+      this.app.use(morgan('combined'));
+    }
+  }
 
+  private initializeRoutes(): void {
     // Health check endpoint
-    this.app.get('/health', (req, res) => {
-      res.status(200).json({ 
-        status: 'ok', 
+    this.app.get('/health', (req: Request, res: Response) => {
+      res.json({
+        status: 'ok',
         timestamp: new Date().toISOString(),
         uptime: process.uptime()
       });
     });
-  }
 
-  private setupRoutes(): void {
     // API routes
-    this.app.use('/api/auth', authRoutes);
-    this.app.use('/api/content', contentRoutes);
     this.app.use('/api/users', userRoutes);
+    this.app.use('/api/content', contentRoutes);
+    this.app.use('/api/auth', authRoutes);
     this.app.use('/api/ai', aiRoutes);
     this.app.use('/api/blockchain', blockchainRoutes);
-
-    // 404 handler
-    this.app.use('*', (req, res) => {
-      res.status(404).json({ error: 'Route not found' });
-    });
   }
 
-  private setupSocketHandlers(): void {
-    this.io.use(async (socket, next) => {
-      try {
-        // Implement socket authentication
-        const token = socket.handshake.auth.token;
-        if (!token) {
-          return next(new Error('Authentication error'));
-        }
-        // Verify token and attach user to socket
-        // socket.userId = decoded.userId;
-        next();
-      } catch (err) {
-        next(new Error('Authentication error'));
-      }
-    });
+  private initializeErrorHandling(): void {
+    // 404 handler - must be before error handler
+    this.app.use(notFoundHandler);
+    
+    // Global error handler - must be last
+    this.app.use(errorHandler);
+  }
 
+  private initializeWebSocket(): void {
     this.io.on('connection', (socket) => {
-      console.log(`User connected: ${socket.id}`);
+      console.log('Client connected:', socket.id);
 
-      // Join user to their personal room
-      // socket.join(`user:${socket.userId}`);
-
-      // Handle real-time events
-      socket.on('post:create', async (data) => {
-        // Broadcast new post to followers
-        this.io.emit('post:new', data);
+      socket.on('join_room', (roomId: string) => {
+        socket.join(roomId);
+        console.log(`Client ${socket.id} joined room: ${roomId}`);
       });
 
-      socket.on('post:like', async (data) => {
-        // Notify post author
-        this.io.to(`user:${data.authorId}`).emit('notification:like', data);
-      });
-
-      socket.on('ai:personalization', async (data) => {
-        // Request AI personalization
-        // Emit results back to user
+      socket.on('leave_room', (roomId: string) => {
+        socket.leave(roomId);
+        console.log(`Client ${socket.id} left room: ${roomId}`);
       });
 
       socket.on('disconnect', () => {
-        console.log(`User disconnected: ${socket.id}`);
+        console.log('Client disconnected:', socket.id);
       });
     });
   }
 
-  private setupErrorHandling(): void {
-    // Global error handler
-    this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-      console.error(err.stack);
-      res.status(500).json({ error: 'Something went wrong!' });
-    });
+  public async connectDatabase(): Promise<void> {
+    try {
+      const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/starling_ai';
+      
+      // For development, connect without authentication
+      const options: mongoose.ConnectOptions = {
+        maxPoolSize: 10,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+        bufferCommands: false
+      };
 
-    process.on('unhandledRejection', (reason, promise) => {
-      console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-    });
-
-    process.on('uncaughtException', (error) => {
-      console.error('Uncaught Exception:', error);
-      process.exit(1);
-    });
+      await mongoose.connect(mongoUri, options);
+      console.log('✅ MongoDB connected successfully');
+    } catch (error) {
+      console.error('❌ MongoDB connection error:', error);
+      // Don't exit the process, let it continue with limited functionality
+    }
   }
 
-  public start(): void {
-    const PORT = process.env.PORT || 3000;
-    this.server.listen(PORT, () => {
-      console.log(`🚀 Starling.ai API Server running on port ${PORT}`);
-      console.log(`📡 WebSocket server ready`);
-      console.log(`🔗 Environment: ${process.env.NODE_ENV || 'development'}`);
-    });
+  public async start(): Promise<void> {
+    try {
+      // Connect to database
+      await this.connectDatabase();
+
+      // Start server
+      this.server.listen(this.port, () => {
+        console.log(`🚀 Starling.ai API Server running on port ${this.port}`);
+        console.log(`📡 WebSocket server ready`);
+        console.log(`🔗 Environment: ${process.env.NODE_ENV || 'development'}`);
+      });
+
+      // Graceful shutdown
+      process.on('SIGTERM', () => {
+        console.log('SIGTERM received, shutting down gracefully');
+        this.server.close(() => {
+          console.log('Process terminated');
+          process.exit(0);
+        });
+      });
+
+      process.on('SIGINT', () => {
+        console.log('SIGINT received, shutting down gracefully');
+        this.server.close(() => {
+          console.log('Process terminated');
+          process.exit(0);
+        });
+      });
+
+    } catch (error) {
+      console.error('❌ Failed to start server:', error);
+      process.exit(1);
+    }
+  }
+
+  public getIO(): SocketIOServer {
+    return this.io;
   }
 }
 
-// Start server
+// Start the server
 const server = new StarlingServer();
-server.start();
+server.start().catch(console.error);
 
-export default server.app; 
+export default server; 
