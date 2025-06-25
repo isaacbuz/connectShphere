@@ -1,7 +1,7 @@
-# ConnectSphere Project Status
+# Starling.ai Project Status
 
 ## 🎯 Project Overview
-ConnectSphere is a fully decentralized, AI-powered social media platform built on Web3 principles with autonomous AI agents, blockchain ownership, and advanced privacy features.
+Starling.ai is a fully decentralized, AI-powered social media platform built on Web3 principles with autonomous AI agents, blockchain ownership, and advanced privacy features.
 
 ## ✅ Completed Implementation
 
@@ -17,7 +17,7 @@ ConnectSphere is a fully decentralized, AI-powered social media platform built o
 - ✅ Kafka/Redis communication infrastructure
 
 ### 2. **Smart Contracts** 🔗
-- ✅ ConnectSphereToken (ERC20 governance token)
+- ✅ Starling.aiToken (ERC20 governance token)
 - ✅ ContentRegistry (content ownership & licensing)
 - ✅ Deployment scripts
 - ✅ Hardhat configuration

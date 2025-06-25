@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to ConnectSphere will be documented in this file.
+All notable changes to Starling.ai will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Content moderation agent with toxicity detection, fact-checking, and NSFW detection
 - Personalization agent with RAG (Retrieval Augmented Generation) capabilities
 - AutoGen orchestrator for multi-agent collaboration
-- Smart contracts: ConnectSphereToken (ERC20) and ContentRegistry
+- Smart contracts: Starling.aiToken (ERC20) and ContentRegistry
 - Docker configuration for all services (backend, agents, databases)
 - Comprehensive test suite for agents
 - GitHub Actions CI/CD pipeline

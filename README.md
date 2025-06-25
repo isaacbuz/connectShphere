@@ -1,101 +1,60 @@
-# ConnectSphere - Decentralized AI-Powered Social Platform
+# Starling.ai - AI-Powered Decentralized Social Network
 
-![ConnectSphere Logo](docs/images/logo.png)
+![Starling.ai Logo](docs/images/logo.png)
 
+[![Build Status](https://img.shields.io/github/workflow/status/starling-ai/starling-ai/CI)](https://github.com/starling-ai/starling-ai/actions)
+[![Discord](https://img.shields.io/discord/123456789)](https://discord.gg/starling-ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://img.shields.io/github/workflow/status/connectsphere/connectsphere/CI)](https://github.com/connectsphere/connectsphere/actions)
-[![Discord](https://img.shields.io/discord/123456789)](https://discord.gg/connectsphere)
 
-## 🚀 Overview
+> **Where social flocks become financial flocks** 🐦✨
 
-ConnectSphere is a cutting-edge decentralized social media platform that combines blockchain technology, AI-powered content moderation, and autonomous agent systems to create a user-owned, censorship-resistant social network.
+Starling.ai is a cutting-edge decentralized social media platform that combines blockchain technology, AI-powered content moderation, and autonomous agent systems to create a user-owned, censorship-resistant social network where every interaction generates value.
 
-### Key Features
+## 🌟 Key Features
 
-- **🤖 AI-Powered Agents**: State-of-the-art autonomous agents for content moderation, personalization, and platform governance
-- **🔗 Blockchain Integration**: Ethereum + Layer 2 solutions for scalability
-- **💰 DOGE Microtransactions**: Seamless micropayments for content monetization
-- **🧠 Advanced ML/AI**: LangChain, AutoGen, CrewAI, and RAG for intelligent features
-- **📊 Decentralized Storage**: IPFS for content persistence
-- **🏛️ DAO Governance**: Community-driven platform decisions
-- **🔒 Privacy-First**: Federated learning and zero-knowledge proofs
+### 🤖 AI-Powered Intelligence
+- **Autonomous Content Moderation**: AI agents automatically detect and moderate inappropriate content
+- **Personalized Recommendations**: Machine learning algorithms curate content based on user preferences
+- **Smart Content Analysis**: Advanced NLP for sentiment analysis and content categorization
+- **Agent Orchestration**: Multi-agent system using LangChain, AutoGen, and CrewAI
 
-## 🏗️ Architecture
+### 💰 Crypto Integration
+- **STARL Token**: Native governance and reward token built on Ethereum
+- **Content Monetization**: Earn tokens for creating and curating quality content
+- **Decentralized Governance**: Token holders participate in platform decisions
+- **Microtransactions**: Seamless crypto payments for premium features
 
-### System Components
+### 🔗 Social Networking
+- **Decentralized Identity**: Web3 wallet-based authentication
+- **Content Ownership**: True ownership of your content with IPFS storage
+- **Censorship Resistance**: Distributed architecture prevents content takedowns
+- **Community Governance**: Democratic decision-making through token voting
 
-```mermaid
-graph TD
-    A[React Frontend] --> B[API Gateway]
-    B --> C[Agent Orchestrator]
-    B --> D[Blockchain Service]
-    B --> E[Content Service]
-    
-    C --> F[Content Moderation Agent]
-    C --> G[Personalization Agent]
-    C --> H[Economic Agent]
-    C --> I[Governance Agent]
-    
-    D --> J[Smart Contracts]
-    D --> K[Layer 2 Networks]
-    
-    E --> L[IPFS Storage]
-    E --> M[MongoDB]
-    E --> N[Redis Cache]
-    
-    F --> O[AI Models]
-    G --> P[Vector DB]
-```
+### 🏗️ Technical Architecture
+- **Microservices**: Scalable backend with Express.js and TypeScript
+- **Real-time Communication**: WebSocket support for live interactions
+- **Blockchain Integration**: Smart contracts for tokenomics and governance
+- **AI Agent System**: Autonomous agents for platform management
 
-### Tech Stack
-
-#### Frontend
-- React 18 with TypeScript
-- Web3.js for blockchain interaction
-- Socket.io for real-time updates
-- Tailwind CSS for styling
-
-#### Backend
-- Node.js with Express
-- GraphQL API
-- WebSocket support
-- Kubernetes orchestration
-
-#### AI/ML
-- **Language Models**: GPT-4, Claude 3, LLaMA 3
-- **Frameworks**: LangChain, AutoGen, CrewAI, LangGraph
-- **Vector DB**: Pinecone, Weaviate
-- **ML Ops**: MLflow, Weights & Biases
-
-#### Blockchain
-- Solidity smart contracts
-- Hardhat development framework
-- OpenZeppelin contracts
-- Chainlink oracles
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-
-- Node.js 18+
-- Python 3.10+
-- Docker & Docker Compose
-- CUDA-capable GPU (optional, for local AI models)
+- Node.js 18+ and npm 9+
+- Python 3.9+
+- Docker and Docker Compose
+- Ethereum development environment (Hardhat)
 
 ### Installation
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/isaacbuz/connectShphere.git
-cd connectShphere
+git clone https://github.com/starling-ai/starling-ai.git
+cd starling-ai
 ```
 
 2. **Install dependencies**
 ```bash
-# Install Node.js dependencies
 npm install
-
-# Install Python dependencies
 pip install -r requirements.txt
 ```
 
@@ -105,113 +64,106 @@ cp env.example .env
 # Edit .env with your configuration
 ```
 
-4. **Start with Docker Compose**
+4. **Start the development environment**
 ```bash
-docker-compose up -d
-```
-
-5. **Initialize the database**
-```bash
-npm run db:migrate
-```
-
-6. **Deploy smart contracts (testnet)**
-```bash
-npm run blockchain:deploy
-```
-
-### Development Setup
-
-For local development without Docker:
-
-```bash
-# Start MongoDB and Redis
-brew services start mongodb-community
-brew services start redis
-
-# Start the backend
+# Start all services
 npm run dev
 
-# Start the AI agents
-python src/agents/main.py
-
-# Start the frontend (in another terminal)
-cd frontend && npm run dev
+# Or start individually
+npm run dev:backend    # Backend API server
+npm run dev:frontend   # React frontend
+npm run dev:agents     # AI agent system
 ```
 
-## 📚 Documentation
+5. **Deploy smart contracts**
+```bash
+npm run compile
+npm run deploy:testnet
+```
 
-### API Documentation
-- [REST API Reference](docs/api/rest.md)
-- [GraphQL Schema](docs/api/graphql.md)
-- [WebSocket Events](docs/api/websocket.md)
+## 🏗️ Architecture
 
-### Smart Contracts
-- [Contract Documentation](docs/contracts/README.md)
-- [Deployment Guide](docs/contracts/deployment.md)
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Backend API   │    │   AI Agents     │
+│   (React/TS)    │◄──►│   (Express/TS)  │◄──►│   (Python)      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Web3 Wallet   │    │   MongoDB       │    │   LangChain     │
+│   Integration   │    │   Redis         │    │   AutoGen       │
+└─────────────────┘    │   Kafka         │    │   CrewAI        │
+                       └─────────────────┘    └─────────────────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │   Blockchain    │
+                       │   (Ethereum)    │
+                       │   IPFS          │
+                       └─────────────────┘
+```
 
-### AI Agents
-- [Agent Architecture](docs/agents/architecture.md)
-- [Agent API](docs/agents/api.md)
-- [Custom Agent Development](docs/agents/development.md)
+## 🤖 AI Agent System
 
-## 🧪 Testing
+Starling.ai features a sophisticated multi-agent system:
 
-### Running Tests
+- **Content Moderation Agent**: Automatically detects and flags inappropriate content
+- **Personalization Agent**: Learns user preferences and curates content
+- **Governance Agent**: Manages platform decisions and token distribution
+- **Orchestrator**: Coordinates all agents for seamless operation
+
+## 💎 Tokenomics
+
+The STARL token powers the Starling.ai ecosystem:
+
+- **Total Supply**: 1,000,000,000 STARL
+- **Rewards Pool**: 70% for user rewards and content monetization
+- **Platform Treasury**: 20% for development and operations
+- **Liquidity**: 10% for DEX liquidity pools
+
+## 🔧 Development
+
+### Available Scripts
 
 ```bash
-# Run all tests
-npm test
+# Development
+npm run dev              # Start all services
+npm run dev:backend      # Backend only
+npm run dev:frontend     # Frontend only
+npm run dev:agents       # AI agents only
 
-# Run specific test suites
-npm run test:unit
-npm run test:integration
-npm run test:e2e
+# Building
+npm run build            # Build all components
+npm run build:frontend   # Build frontend
+npm run build:backend    # Build backend
 
-# Python agent tests
-pytest src/tests/test_agents.py -v
+# Testing
+npm test                 # Run all tests
+npm run test:coverage    # Test with coverage
+npm run blockchain:test  # Smart contract tests
 
-# Smart contract tests
-npm run blockchain:test
+# Deployment
+npm run deploy           # Deploy contracts
+npm run docker:up        # Start with Docker
+npm run k8s:deploy       # Deploy to Kubernetes
 ```
 
-### Test Coverage
+### Project Structure
 
-```bash
-# Generate coverage report
-npm run test:coverage
-
-# Python coverage
-pytest --cov=src/agents --cov-report=html
 ```
-
-## 🚀 Deployment
-
-### Production Deployment
-
-1. **Configure environment**
-```bash
-cp env.production.example .env.production
-# Configure production settings
+starling-ai/
+├── src/
+│   ├── agents/          # AI agent system
+│   ├── api/            # Backend API server
+│   ├── blockchain/     # Smart contracts
+│   ├── frontend/       # React frontend
+│   └── tests/          # Test suites
+├── infrastructure/     # DevOps configuration
+├── docs/              # Documentation
+└── scripts/           # Utility scripts
 ```
-
-2. **Build containers**
-```bash
-docker build -t connectsphere/backend -f Dockerfile.backend .
-docker build -t connectsphere/agents -f Dockerfile.agents .
-```
-
-3. **Deploy to Kubernetes**
-```bash
-kubectl apply -f infrastructure/k8s/
-```
-
-### Scaling Considerations
-
-- Use horizontal pod autoscaling for API services
-- GPU nodes for AI agent workloads
-- Redis cluster for caching
-- MongoDB sharding for data scaling
 
 ## 🤝 Contributing
 
@@ -225,75 +177,33 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-### Code Style
-
-- JavaScript/TypeScript: ESLint + Prettier
-- Python: Black + Flake8
-- Solidity: Solhint
-
-## 📊 Performance Benchmarks
-
-| Metric | Target | Current |
-|--------|---------|---------|
-| API Latency (p99) | < 100ms | 85ms |
-| Content Moderation | < 500ms | 420ms |
-| Feed Generation | < 1s | 800ms |
-| Transaction Finality | < 2s | 1.5s |
-
-## 🔒 Security
-
-### Security Features
-
-- Smart contract audits by [Audit Firm]
-- Penetration testing
-- Bug bounty program
-- Regular dependency updates
-
-### Reporting Security Issues
-
-Please report security vulnerabilities to security@connectsphere.io
-
-## 📈 Roadmap
-
-### Phase 1: Foundation (Q1 2024) ✅
-- [x] Core smart contracts
-- [x] Basic AI agents
-- [x] MVP frontend
-
-### Phase 2: AI Enhancement (Q2 2024) 🚧
-- [ ] Advanced agent orchestration
-- [ ] Federated learning
-- [ ] Enhanced personalization
-
-### Phase 3: Scaling (Q3 2024) 📋
-- [ ] Layer 2 migration
-- [ ] Mobile apps
-- [ ] Global CDN
-
-### Phase 4: Ecosystem (Q4 2024) 📋
-- [ ] Developer SDK
-- [ ] Plugin marketplace
-- [ ] Cross-chain bridges
-
-## 📞 Support
-
-- **Discord**: [Join our community](https://discord.gg/connectsphere)
-- **Twitter**: [@ConnectSphere](https://twitter.com/connectsphere)
-- **Email**: support@connectsphere.io
-- **Documentation**: [docs.connectsphere.io](https://docs.connectsphere.io)
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🐛 Bug Reports
+
+Please use the [GitHub issue tracker](https://github.com/starling-ai/starling-ai/issues) to report bugs or request features.
+
+## 🔒 Security
+
+Please report security vulnerabilities to security@starling.ai
+
+## 📞 Support
+
+- **Discord**: [Join our community](https://discord.gg/starling-ai)
+- **Twitter**: [@StarlingAI](https://twitter.com/starling-ai)
+- **Email**: support@starling.ai
+- **Documentation**: [docs.starling.ai](https://docs.starling.ai)
+
 ## 🙏 Acknowledgments
 
-- OpenAI for GPT-4 API
-- Anthropic for Claude API
-- The Ethereum Foundation
-- IPFS Community
-- All our contributors and supporters
+- Built with cutting-edge AI frameworks (LangChain, AutoGen, CrewAI)
+- Powered by Ethereum and IPFS for decentralization
+- Inspired by the collective intelligence of starling murmurations
 
 ---
 
-Built with ❤️ by the ConnectSphere Team 
+Built with ❤️ by the Starling.ai Team
+
+*"Where social flocks become financial flocks"* 🐦✨ 

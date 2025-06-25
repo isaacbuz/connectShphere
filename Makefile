@@ -2,7 +2,7 @@
 
 # Default target
 help:
-	@echo "ConnectSphere Project Commands:"
+	@echo "Starling.ai Project Commands:"
 	@echo "  make install          - Install all dependencies"
 	@echo "  make dev             - Start development environment"
 	@echo "  make build           - Build production artifacts"
@@ -42,8 +42,8 @@ build:
 	@echo "Building production artifacts..."
 	npm run build
 	@echo "Building Docker images..."
-	docker build -f Dockerfile.backend -t connectsphere/backend:latest .
-	docker build -f Dockerfile.agents -t connectsphere/agents:latest .
+	docker build -f Dockerfile.backend -t starling-ai/backend:latest .
+	docker build -f Dockerfile.agents -t starling-ai/agents:latest .
 	@echo "Compiling smart contracts..."
 	npx hardhat compile
 	@echo "Build complete!"

@@ -18,13 +18,12 @@ import aiRoutes from './routes/ai.routes';
 import blockchainRoutes from './routes/blockchain.routes';
 
 // Import middleware
-import { errorHandler } from './middleware/error.middleware';
-import { authenticate } from './middleware/auth.middleware';
+import { authenticateToken } from './middleware/auth';
 
 // Load environment variables
 dotenv.config();
 
-class ConnectSphereServer {
+class StarlingServer {
   public app: express.Application;
   public server: any;
   public io: Server;
@@ -53,7 +52,7 @@ class ConnectSphereServer {
 
   private async connectDatabase(): Promise<void> {
     try {
-      await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/connectsphere', {
+      await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/starling_ai', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       } as any);
@@ -97,14 +96,12 @@ class ConnectSphereServer {
   }
 
   private setupRoutes(): void {
-    // Public routes
+    // API routes
     this.app.use('/api/auth', authRoutes);
-    
-    // Protected routes
-    this.app.use('/api/content', authenticate, contentRoutes);
-    this.app.use('/api/users', authenticate, userRoutes);
-    this.app.use('/api/ai', authenticate, aiRoutes);
-    this.app.use('/api/blockchain', authenticate, blockchainRoutes);
+    this.app.use('/api/content', contentRoutes);
+    this.app.use('/api/users', userRoutes);
+    this.app.use('/api/ai', aiRoutes);
+    this.app.use('/api/blockchain', blockchainRoutes);
 
     // 404 handler
     this.app.use('*', (req, res) => {
@@ -157,7 +154,11 @@ class ConnectSphereServer {
   }
 
   private setupErrorHandling(): void {
-    this.app.use(errorHandler);
+    // Global error handler
+    this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+      console.error(err.stack);
+      res.status(500).json({ error: 'Something went wrong!' });
+    });
 
     process.on('unhandledRejection', (reason, promise) => {
       console.error('Unhandled Rejection at:', promise, 'reason:', reason);
@@ -172,7 +173,7 @@ class ConnectSphereServer {
   public start(): void {
     const PORT = process.env.PORT || 3000;
     this.server.listen(PORT, () => {
-      console.log(`🚀 ConnectSphere API Server running on port ${PORT}`);
+      console.log(`🚀 Starling.ai API Server running on port ${PORT}`);
       console.log(`📡 WebSocket server ready`);
       console.log(`🔗 Environment: ${process.env.NODE_ENV || 'development'}`);
     });
@@ -180,7 +181,7 @@ class ConnectSphereServer {
 }
 
 // Start server
-const server = new ConnectSphereServer();
+const server = new StarlingServer();
 server.start();
 
 export default server.app; 

@@ -1,12 +1,12 @@
 """
-ConnectSphere AI Agents Module
+Starling.ai AI Agents Module
 Exports all agent classes and orchestration components
 """
 
 from .base_agent import BaseAgent, AgentConfig, AgentMessage
 from .content_moderation_agent import ContentModerationAgent, ContentAnalysis
 from .personalization_agent import PersonalizationAgent, ContentRecommendation, UserProfile
-from .autogen_orchestrator import ConnectSphereOrchestrator
+from .autogen_orchestrator import Starling.aiOrchestrator
 
 __all__ = [
     'BaseAgent',
@@ -17,7 +17,7 @@ __all__ = [
     'PersonalizationAgent',
     'ContentRecommendation',
     'UserProfile',
-    'ConnectSphereOrchestrator'
+    'Starling.aiOrchestrator'
 ]
 
 # Version

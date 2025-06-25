@@ -1,1 +1,1 @@
-# Tests module for ConnectSphere 
+# Tests module for Starling.ai 

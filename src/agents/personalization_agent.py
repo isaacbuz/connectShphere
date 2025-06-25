@@ -1,5 +1,5 @@
 """
-Personalization Agent for ConnectSphere
+Personalization Agent for Starling.ai
 Implements RAG-based personalized content recommendations
 """
 
@@ -67,7 +67,7 @@ class VectorSearchTool(BaseTool):
         
         # Initialize embeddings
         self.embeddings = OpenAIEmbeddings()
-        self.index_name = "connectsphere-content"
+        self.index_name = "starling_ai-content"
         
         # Create index if it doesn't exist
         if self.index_name not in pinecone.list_indexes():
@@ -247,7 +247,7 @@ class PersonalizationAgent(BaseAgent):
             environment=os.getenv("PINECONE_ENV", "us-west4-gcp")
         )
         
-        self.rag_index_name = "connectsphere-rag"
+        self.rag_index_name = "starling_ai-rag"
         if self.rag_index_name not in pinecone.list_indexes():
             pinecone.create_index(
                 self.rag_index_name,

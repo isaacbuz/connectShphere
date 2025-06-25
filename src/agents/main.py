@@ -1,5 +1,5 @@
 """
-Main entry point for ConnectSphere Agent System
+Main entry point for Starling.ai Agent System
 Initializes and runs all AI agents
 """
 
@@ -12,7 +12,7 @@ from typing import Optional
 
 from dotenv import load_dotenv
 
-from .autogen_orchestrator import ConnectSphereOrchestrator
+from .autogen_orchestrator import Starling.aiOrchestrator
 from .content_moderation_agent import ContentModerationAgent
 from .personalization_agent import PersonalizationAgent
 
@@ -35,7 +35,7 @@ class AgentSystem:
     """Main agent system coordinator"""
     
     def __init__(self):
-        self.orchestrator: Optional[ConnectSphereOrchestrator] = None
+        self.orchestrator: Optional[Starling.aiOrchestrator] = None
         self.content_moderator: Optional[ContentModerationAgent] = None
         self.personalization_engine: Optional[PersonalizationAgent] = None
         self.running = False
@@ -52,7 +52,7 @@ class AgentSystem:
     async def initialize(self):
         """Initialize all agent components"""
         try:
-            logger.info("Initializing ConnectSphere Agent System...")
+            logger.info("Initializing Starling.ai Agent System...")
             
             # Check required environment variables
             required_vars = [
@@ -69,7 +69,7 @@ class AgentSystem:
             
             # Initialize orchestrator
             logger.info("Initializing AutoGen Orchestrator...")
-            self.orchestrator = ConnectSphereOrchestrator()
+            self.orchestrator = Starling.aiOrchestrator()
             
             # Initialize individual agents
             logger.info("Initializing Content Moderation Agent...")

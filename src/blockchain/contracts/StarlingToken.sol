@@ -10,10 +10,10 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
 /**
- * @title ConnectSphere Governance Token (SPHERE)
- * @dev Implementation of the SPHERE token with governance capabilities
+ * @title Starling.ai Governance Token (STARL)
+ * @dev Implementation of the STARL token with governance capabilities
  */
-contract ConnectSphereToken is 
+contract Starling.aiToken is 
     ERC20, 
     ERC20Burnable, 
     ERC20Snapshot, 
@@ -51,8 +51,8 @@ contract ConnectSphereToken is
     event RewardsDistributed(address indexed user, uint256 amount, string reason);
 
     constructor() 
-        ERC20("ConnectSphere", "SPHERE") 
-        ERC20Permit("ConnectSphere") 
+        ERC20("Starling.ai", "STARL") 
+        ERC20Permit("Starling.ai") 
     {
         // Mint initial allocations
         _mint(address(this), REWARDS_ALLOCATION); // For rewards distribution

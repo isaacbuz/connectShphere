@@ -1,5 +1,5 @@
 """
-Content Moderation Agent for ConnectSphere
+Content Moderation Agent for Starling.ai
 Handles content safety, toxicity detection, and fact-checking
 """
 

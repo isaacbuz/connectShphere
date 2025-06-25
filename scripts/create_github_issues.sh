@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ConnectSphere GitHub Issues Creation Script
+# Starling.ai GitHub Issues Creation Script
 # This script creates all the GitHub issues defined in GITHUB_ISSUES.md
 
 # Set your GitHub personal access token
@@ -57,7 +57,7 @@ EOF
     fi
 }
 
-echo "Creating GitHub issues for ConnectSphere implementation..."
+echo "Creating GitHub issues for Starling.ai implementation..."
 echo "Repository: $REPO_OWNER/$REPO_NAME"
 echo ""
 

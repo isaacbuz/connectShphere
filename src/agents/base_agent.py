@@ -1,5 +1,5 @@
 """
-Base Agent Framework for ConnectSphere
+Base Agent Framework for Starling.ai
 Implements core agent functionality with LangChain integration
 """
 
@@ -49,7 +49,7 @@ class AgentMessage(BaseModel):
 
 
 class BaseAgent(ABC):
-    """Base class for all ConnectSphere agents"""
+    """Base class for all Starling.ai agents"""
     
     def __init__(self, config: AgentConfig):
         self.config = config
@@ -125,7 +125,7 @@ class BaseAgent(ABC):
     
     def _get_agent_prompt_template(self) -> str:
         """Get the agent's prompt template"""
-        return f"""You are {self.name}, a {self.role} in the ConnectSphere platform.
+        return f"""You are {self.name}, a {self.role} in the Starling.ai platform.
 
 Your responsibilities:
 {self._get_responsibilities()}

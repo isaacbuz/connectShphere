@@ -1,6 +1,6 @@
-# Contributing to ConnectSphere
+# Contributing to Starling.ai
 
-First off, thank you for considering contributing to ConnectSphere! It's people like you that make ConnectSphere such a great tool.
+First off, thank you for considering contributing to Starling.ai! It's people like you that make Starling.ai such a great tool.
 
 ## Table of Contents
 
@@ -294,4 +294,4 @@ Feel free to:
 - Join our Discord community
 - Contact maintainers directly
 
-Thank you for contributing to ConnectSphere! 🚀 
+Thank you for contributing to Starling.ai! 🚀 

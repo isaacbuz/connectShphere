@@ -1,5 +1,5 @@
 """
-Comprehensive test suite for ConnectSphere Agent System
+Comprehensive test suite for Starling.ai Agent System
 Tests all agent functionality, interactions, and edge cases
 """
 
@@ -18,7 +18,7 @@ from src.agents import (
     PersonalizationAgent,
     ContentRecommendation,
     UserProfile,
-    ConnectSphereOrchestrator
+    Starling.aiOrchestrator
 )
 
 
@@ -213,7 +213,7 @@ class TestPersonalizationAgent:
         from src.agents.personalization_agent import VectorSearchTool
         
         with patch('pinecone.init'):
-            with patch('pinecone.list_indexes', return_value=['connectsphere-content']):
+            with patch('pinecone.list_indexes', return_value=['starling_ai-content']):
                 with patch('pinecone.Index') as mock_index:
                     mock_index.return_value.query.return_value = {
                         'matches': [
@@ -244,7 +244,7 @@ class TestAutoGenOrchestrator:
         }):
             with patch('src.agents.content_moderation_agent.ContentModerationAgent'):
                 with patch('src.agents.personalization_agent.PersonalizationAgent'):
-                    return ConnectSphereOrchestrator()
+                    return Starling.aiOrchestrator()
     
     @pytest.mark.asyncio
     async def test_complex_task_handling(self, orchestrator):

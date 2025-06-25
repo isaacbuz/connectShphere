@@ -173,9 +173,9 @@ jobs:
         context: .
         file: ./Dockerfile.backend
         push: false
-        tags: connectsphere/backend:latest
-        cache-from: type=registry,ref=connectsphere/backend:buildcache
-        cache-to: type=registry,ref=connectsphere/backend:buildcache,mode=max
+        tags: starling-ai/backend:latest
+        cache-from: type=registry,ref=starling-ai/backend:buildcache
+        cache-to: type=registry,ref=starling-ai/backend:buildcache,mode=max
     
     - name: Build agents image (without push)
       uses: docker/build-push-action@v4
@@ -183,7 +183,7 @@ jobs:
         context: .
         file: ./Dockerfile.agents
         push: false
-        tags: connectsphere/agents:latest
+        tags: starling-ai/agents:latest
 
   # Deploy to Staging (placeholder)
   deploy-staging:

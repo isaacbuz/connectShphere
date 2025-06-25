@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 /**
  * @title ContentRegistry
- * @dev Manages content ownership, licensing, and monetization on ConnectSphere
+ * @dev Manages content ownership, licensing, and monetization on Starling.ai
  */
 contract ContentRegistry is AccessControl, ReentrancyGuard, Pausable {
     using Counters for Counters.Counter;

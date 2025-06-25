@@ -1,9 +1,9 @@
 
-# ConnectSphere: The Decentralized AI-Powered Social Web
+# Starling.ai: The Decentralized AI-Powered Social Web
 
 ## 1. Executive Summary
 
-ConnectSphere is a fully decentralized, AI-powered, Web3 social media platform. It integrates blockchain-based ownership, Dogecoin microtransactions, and agentic AI for content moderation, personalization, and governance. Built to scale from MVP to an "everything app," ConnectSphere aims to redefine social engagement by turning every user into a stakeholder and every interaction into economic value.
+Starling.ai is a fully decentralized, AI-powered, Web3 social media platform. It integrates blockchain-based ownership, Dogecoin microtransactions, and agentic AI for content moderation, personalization, and governance. Built to scale from MVP to an "everything app," Starling.ai aims to redefine social engagement by turning every user into a stakeholder and every interaction into economic value.
 
 ## 2. Problem & Opportunity
 
@@ -92,7 +92,7 @@ graph TD
 
 ### Phase 4: Governance & DeFi (Months 13–18)
 - [ ] DAO voting via snapshot or contract
-- [ ] SPHERE token staking
+- [ ] STARL token staking
 - [ ] Marketplace for AI agents, NFTs
 - [ ] DeFi features: lending, liquidity rewards
 
@@ -106,7 +106,7 @@ graph TD
 | Platform | 20% |
 | Liquidity Pool | 10% |
 
-SPHERE Token Use Cases:
+STARL Token Use Cases:
 - Voting
 - Staking
 - Premium feature unlocks
@@ -142,4 +142,4 @@ SPHERE Token Use Cases:
 
 ## 11. Conclusion
 
-ConnectSphere aims to replace extractive social media platforms with an incentivized, intelligent, user-owned alternative. Through decentralized architecture, DOGE microtransactions, and AI-driven experience layers, it becomes the foundation of the Web3 social economy.
+Starling.ai aims to replace extractive social media platforms with an incentivized, intelligent, user-owned alternative. Through decentralized architecture, DOGE microtransactions, and AI-driven experience layers, it becomes the foundation of the Web3 social economy.

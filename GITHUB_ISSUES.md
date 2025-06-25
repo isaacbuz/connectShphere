@@ -1,4 +1,4 @@
-# ConnectSphere GitHub Issues for Implementation Tracking
+# Starling.ai GitHub Issues for Implementation Tracking
 
 ## Epic 1: Core Infrastructure Setup
 
