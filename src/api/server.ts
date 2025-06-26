@@ -135,9 +135,14 @@ class StarlingServer {
 
   public async connectDatabase(): Promise<void> {
     try {
-      const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/starling_ai';
+      let mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/starling_ai';
       
-      // For development, connect without authentication
+      // Check if we're connecting to a Docker MongoDB with auth
+      if (mongoUri.includes('localhost:27017') && process.env.NODE_ENV !== 'production') {
+        // For local development without auth
+        mongoUri = 'mongodb://localhost:27017/starling_ai';
+      }
+      
       const options: mongoose.ConnectOptions = {
         maxPoolSize: 10,
         serverSelectionTimeoutMS: 5000,
@@ -147,9 +152,33 @@ class StarlingServer {
 
       await mongoose.connect(mongoUri, options);
       console.log('✅ MongoDB connected successfully');
+      
+      // Test the connection
+      await mongoose.connection.db.admin().ping();
+      console.log('✅ MongoDB connection verified');
     } catch (error) {
       console.error('❌ MongoDB connection error:', error);
-      // Don't exit the process, let it continue with limited functionality
+      
+      // Try to connect without auth for local development
+      if (process.env.NODE_ENV !== 'production') {
+        try {
+          console.log('🔄 Attempting to connect to MongoDB without authentication...');
+          const fallbackUri = 'mongodb://localhost:27017/starling_ai';
+          await mongoose.connect(fallbackUri, {
+            maxPoolSize: 10,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+            bufferCommands: false,
+            authSource: undefined,
+            auth: undefined
+          });
+          console.log('✅ MongoDB connected successfully (no auth)');
+        } catch (fallbackError) {
+          console.error('❌ MongoDB fallback connection failed:', fallbackError);
+          // Continue without database for development
+          console.warn('⚠️ Running without database connection');
+        }
+      }
     }
   }
 

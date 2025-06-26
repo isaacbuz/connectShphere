@@ -14,6 +14,8 @@
     "dev:agents": "python src/agents/main.py",
     "dev:monitor": "node scripts/monitor.js",
     "monitor": "node scripts/monitor.js",
+    "issue-tracker": "node scripts/issue-tracker.js",
+    "dev:full": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run monitor\" \"npm run issue-tracker\"",
     "build": "npm run build:frontend && npm run build:backend && npm run compile",
     "build:frontend": "cd src/frontend && vite build",
     "build:backend": "tsc -p tsconfig.json",

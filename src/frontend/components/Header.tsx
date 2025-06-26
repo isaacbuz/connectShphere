@@ -11,7 +11,7 @@ interface HeaderProps {
   theme?: 'light' | 'dark';
 }
 
-export const Header: React.FC<HeaderProps> = ({ onThemeToggle, theme = 'light' }) => {
+const Header: React.FC<HeaderProps> = ({ onThemeToggle, theme = 'light' }) => {
   const { account, isConnected, balance } = useWeb3();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -179,4 +179,6 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, theme = 'light' }
       </div>
     </header>
   );
-}; 
+};
+
+export default Header; 
